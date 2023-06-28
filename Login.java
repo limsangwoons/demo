@@ -25,7 +25,13 @@ class Login
 
             String sql = "select * from users where (email ='" + email +"' and password ='" + token + "')";
             Connection connection = pool.getConnection();
-            Statement statement = connection.createStatement();
+
+
+           PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, email);
+
+            statement.setString(2, token);
 
             HttpSession session = request.getSession();
             String role = (String)session.getAttribute("role");
